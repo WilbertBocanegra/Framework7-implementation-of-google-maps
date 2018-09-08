@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar -->
+    <meta name="theme-color" content="#2196f3">
+    <!-- Your app title -->
+    <title></title>
+    <!-- Path to Framework7 Library CSS -->
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css"><!--Para cambiar el tema a material cambie el ios por el md aqui y en el
+java script que esta en la carpeta js dentro d www cambie theme:'ios' por 'md'-->
+
+</script>
+    <!-- Path to icon library CCS-->
+    <link rel="stylesheet" href="css/icons.css">
+    <!-- Path to styles library CCS-->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+          height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
+  </head>
+  <body>
+    <!-- App root element -->
+    <div id="app">
+      <!-- Statusbar overlay -->
+      <div class="statusbar"></div>
+
+      <!-- Your main view, should have "view-main" class -->
+      <div class="view view-main">
+        <!-- Initial Page, "data-name" contains page name -->
+        <div data-name="home" class="page">
+          <!-- Top Navbar -->
+          <div class="navbar">
+            <div class="navbar-inner">
+            	<div class="left">
+
+              </div>
+              <div class="title">Ubicación</div>
+              <div class="right">
+                <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-demo">
+                         <i class="icon f7-icons ios-only">search_strong</i>
+                         <i class="icon material-icons md-only">search</i>
+                       </a>
+              </div>
+              <form data-search-container=".search-list" data-search-in=".item-title" class="searchbar searchbar-expandable searchbar-demo searchbar-init">
+       <div class="searchbar-inner">
+         <div class="searchbar-input-wrap">
+           <input type="search" placeholder="Search"/>
+           <i class="searchbar-icon"></i>
+           <span class="input-clear-button"></span>
+         </div>
+         <span class="searchbar-disable-button">Cancel</span>
+       </div>
+     </form>
+            </div>
+          </div>
+
+
+          <!-- Scrollable page content -->
+          <div class="page-content">
+
+
+            <div id="map"></div>
+                <script>
+
+
+
+                      var labelIndex = 0;
+
+                var citymap = {
+                  upc: {
+                    center: {lat: 17.809382, lng: -92.925505},
+                    population: 1
+                  },
+                };
+
+                function initMap() {
+                        var myLatlng = {lat: 17.809382, lng: -92.925505};
+
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                          zoom: 9,
+                          center: myLatlng
+                        });
+
+                        var marker = new google.maps.Marker({
+                          position: myLatlng,
+                          map: map,
+                          draggable: true,
+         animation: google.maps.Animation.DROP,
+         label:'Universidad Politecnica del Centro',
+                        });
+
+                        map.addListener('center_changed', function() {
+                          // 3 seconds after the center of the map has changed, pan back to the
+                          // marker.
+                          window.setTimeout(function() {
+                            map.panTo(marker.getPosition());
+                          }, 3000);
+                        });
+
+                        marker.addListener('click', function() {
+                          map.setZoom(17);
+                          map.setCenter(marker.getPosition());
+                        });
+                        for (var city in citymap) {
+                          var cityCircle = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: citymap[city].center,
+                            radius: Math.sqrt(citymap[city].population) * 100
+                          });
+                        }
+                      }
+
+
+
+
+
+
+
+                </script>
+
+
+
+
+            <!-- Link to another page
+            <a href="/about/" align="center">About</a>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Path to Google maps api -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?AIzaSyAOsHXQ1cwUsoFjEon1UpT7e33kFl9kkaY&callback=initMap"
+ type="text/javascript"></script>
+
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>
